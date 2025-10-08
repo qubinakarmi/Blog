@@ -1,46 +1,28 @@
 <x-login>
-    <x-slot name="title">Register</x-slot>
+    <x-slot name="title">Login</x-slot>
     <x-slot name="main">
-
-
         <div class="container">
-            <h1 style="text-align:center;">Register</h1>
-
-            <form action="register" method="post">
+            <h1 style="text-align: center;">Login</h1>
+            <form action="login-user" method="post">
                 @csrf
-
-
-                <input type="text" name="username" id="" placeholder="Enter your name">
-
-                @error('username')
-                    <span class="alert alert-danger" role="alert"> {{ $message }} </span>
-                @enderror <br><br>
-
-
-                <input type="text" name="email" placeholder="Enter your email">
-                @error('email')
-                    <span class="alert alert-danger" role="alert"> {{ $message }} </span>
-                @enderror
-                <br>
-                <br>
-
-
-                <input type="password" name="password" placeholder="Enter your password">
-                @error('password')
-                    <span class="alert alert-danger" role="alert"> {{ $message }}</span>
-                @enderror
-                <br><br>
-
-                <input type="password" name="password_confirmation" placeholder="Enter your password"><br><br>
-
+                <div class="input-group">
+                    <input type="text" name="email" placeholder="Enter your email" required>
+                    @error('email')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="input-group">
+                    <input type="password" name="password" placeholder="Enter your password" required>
+                    @error('password')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="link-group">
+                    <a href="register">Don't have an account? Register here</a>
+                </div>
                 <button type="submit" class="btn">Submit</button>
-
             </form>
-
-            <a href="login">Already have an account ?</a>
-
         </div>
-
 
         <style>
             body {
@@ -154,10 +136,8 @@
                     padding: 16px;
                 }
 
-                input,
-                .btn {
-                    font-size: 16px;
-                    /* Prevent zoom on mobile */
+                input, .btn {
+                    font-size: 16px; /* Prevent zoom on mobile */
                 }
             }
         </style>
