@@ -34,4 +34,8 @@ Route::view('register','register');
 
 
 
+Route::view('blog','blog');
+Route::post('blog',[UserController::class,'blog'])->name('blog');
+Route::get('/blog-list', [UserController::class, 'showBlogs'])->name('blogpage');
 
+Route::get('admin-list', [UserController::class, 'bloglist'])->name('bloglist');

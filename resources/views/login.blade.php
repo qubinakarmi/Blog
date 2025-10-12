@@ -1,7 +1,18 @@
 <x-login>
     <x-slot name="title">Login</x-slot>
     <x-slot name="main">
+
+{{-- 
+        <div>
+            @if (session('error'))
+                {{ session('error') }}
+            @endif
+        </div> --}}
+
         <div class="container">
+            @if (session('error'))
+                <div class="error" style="background:red; color:white;">{{ session('error') }}</div>
+            @endif
             <h1 style="text-align: center;">Login</h1>
             <form action="login-user" method="post">
                 @csrf
@@ -136,8 +147,10 @@
                     padding: 16px;
                 }
 
-                input, .btn {
-                    font-size: 16px; /* Prevent zoom on mobile */
+                input,
+                .btn {
+                    font-size: 16px;
+                    /* Prevent zoom on mobile */
                 }
             }
         </style>
