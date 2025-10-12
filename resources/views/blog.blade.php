@@ -9,7 +9,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <form action="blog" method="post" class="mx-auto my-auto" enctype="multipart/form-data">
+            <form action="{{ route('add.blog') }}" method="post" class="mx-auto my-auto" enctype="multipart/form-data">
 
                 @csrf
 
