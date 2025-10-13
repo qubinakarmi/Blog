@@ -5,6 +5,12 @@
     </x-slot>
     <x-slot name='main'>
 
+        @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+        
+
         <div>
             <a href="{{ route('blog') }}" class="btn btn-outline-info my-2"><i class="fa-solid fa-plus"></i></a>
         </div>

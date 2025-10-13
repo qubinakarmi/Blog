@@ -39,6 +39,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->controller(UserController
     Route::post('/add', 'blog')->name('add.blog');
     Route::get('/list', 'bloglist')->name('list.blog');
     Route::get('/delete/{id}', 'blogdelete')->name('delete.blog');
+    Route::get('/edit/{id}', 'blogedit');
+    Route::put('/edit/{id}', 'editlist')->name('editlist');
+
  
 });
 
@@ -51,3 +54,4 @@ Route::get('admin/login', [UserController::class, 'showAdminLogin'])->name('admi
 Route::post('admin/login-user', [UserController::class, 'adminLogin'])->name('admin.login-user');
 
 Route::post('logout', [UserController::class, 'logout'])->name('logout');
+

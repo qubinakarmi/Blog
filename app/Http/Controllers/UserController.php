@@ -44,73 +44,73 @@ class UserController extends Controller
 
 
     // Show user login form
-public function showUserLogin()
-{
-    return view('user.login'); // make sure view folder is user/login.blade.php
-}
-
-// Handle user login
-public function userLogin(Request $request)
-{
-    $credentials = $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-    ]);
-
-    // Only allow non-admin users here (role != admin)
-    if (Auth::attempt(array_merge($credentials, ['user_type' => 'user']))) {
-        $request->session()->regenerate();
-        return redirect()->intended(route('home'));
+    public function showUserLogin()
+    {
+        return view('user.login'); // make sure view folder is user/login.blade.php
     }
 
-    return back()->withErrors([
-        'email' => 'The provided credentials do not match our records.',
-    ]);
-}
+    // Handle user login
+    public function userLogin(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-// Show admin login form
-public function showAdminLogin()
-{
-    return view('admin.login'); // make sure view folder is admin/login.blade.php
-}
+        // Only allow non-admin users here (role != admin)
+        if (Auth::attempt(array_merge($credentials, ['user_type' => 'user']))) {
+            $request->session()->regenerate();
+            return redirect()->intended(route('home'));
+        }
 
-// Handle admin login
-public function adminLogin(Request $request)
-{
-    $credentials = $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-    ]);
-
-    // Only allow admin users here (role = admin)
-    if (Auth::attempt(array_merge($credentials, ['user_type' => 'admin']))) {
-        $request->session()->regenerate();
-        return redirect()->intended(route('list.blog')); // or admin dashboard
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
 
-    return back()->withErrors([
-        'email' => 'The provided credentials do not match our records.',
-    ]);
-}
-
-
-
-
-  public function logout(Request $request)
-{
-    $user = Auth::user(); // Save user before logging out
-
-    Auth::logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-
-    // Redirect based on user_type (or isAdmin logic)
-    if ($user && $user->user_type === 'admin') {
-        return redirect()->route('admin.login');
+    // Show admin login form
+    public function showAdminLogin()
+    {
+        return view('admin.login'); // make sure view folder is admin/login.blade.php
     }
 
-    return redirect()->route('login'); // user login
-}
+    // Handle admin login
+    public function adminLogin(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        // Only allow admin users here (role = admin)
+        if (Auth::attempt(array_merge($credentials, ['user_type' => 'admin']))) {
+            $request->session()->regenerate();
+            return redirect()->intended(route('list.blog')); // or admin dashboard
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
+    }
+
+
+
+
+    public function logout(Request $request)
+    {
+        $user = Auth::user(); // Save user before logging out
+
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        // Redirect based on user_type (or isAdmin logic)
+        if ($user && $user->user_type === 'admin') {
+            return redirect()->route('admin.login');
+        }
+
+        return redirect()->route('login'); // user login
+    }
 
 
 
@@ -156,7 +156,7 @@ public function adminLogin(Request $request)
 
     function bloglist()
     {
-       $blogs = Blog::latest()->get();
+        $blogs = Blog::latest()->get();
         return view('blog-list', compact('blogs'));
     }
 
@@ -164,18 +164,46 @@ public function adminLogin(Request $request)
     function blogdelete($id)
     {
 
-      $deleted_blog=Blog::destroy($id);
- 
-      if($deleted_blog)
-      {
-          return redirect()->intended(route('list.blog'));
-      }
-      else{
-        die('error');
-      }
-      
+        $deleted_blog = Blog::destroy($id);
+
+        if ($deleted_blog) {
+            return redirect()->intended(route('list.blog'));
+        } else {
+            die('error');
+        }
     }
 
+    function blogedit($id)
+    {
+        $editblog=Blog::find($id);
 
+
+        return view('edit-blog',compact('editblog'));
+    }
+
+function editlist(Request $request,$id)
+
+{
+    $editblog=Blog::find($id);
+    $editblog->title=$request->title;
+    $editblog->description=$request->description;
+    if ($request->hasFile('file')) {
+            $imageName = time() . '.' . $request->file('file')->extension();
+            $request->file('file')->move(public_path('blog_images'), $imageName);
+            $editblog->file = $imageName;
+        }
+   
+
+    if($editblog->save())
+    {
+        return redirect()->intended(route('list.blog'))->with('success','edited successfully');
+    }
+    else{
+        die('error');
+    }
     
+    
+}
+
+
 }
