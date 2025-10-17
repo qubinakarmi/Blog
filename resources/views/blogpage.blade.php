@@ -17,8 +17,11 @@
                         <img src="{{ asset('blog_images/' . $blog->file) }}" class="card-img-top" alt="Blog Image" style="height:300px;">
                         <div class="card-body">
                             <h5 class="card-title">{{ $blog->title }}</h5>
-                            <p class="card-text">{{ $blog->description }}</p>
+                            <p class="card-text">{{Str::limit($blog->description,50)}}</p>
                             <small class="text-muted">Posted on {{ $blog->created_at->format('d M, Y') }}</small>
+                            <div class="readmore">
+                                <a href="{{ route('fullpost',$blog->id) }}" class="btn">Read More<i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>

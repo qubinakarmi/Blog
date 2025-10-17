@@ -11,6 +11,13 @@ use App\Models\Blog;
 class UserController extends Controller
 {
 
+
+    function showFullpost($id)
+    {
+        $blogs=Blog::findorFail($id);
+        return view('fullpost',compact('blogs'));
+    }
+
     function dashboard()
     {
         return view('dashboard');
@@ -167,7 +174,7 @@ class UserController extends Controller
         $deleted_blog = Blog::destroy($id);
 
         if ($deleted_blog) {
-            return redirect()->intended(route('list.blog'));
+            return redirect()->intended(route('list.blog'))->with('error','Blog has been deleted');
         } else {
             die('error');
         }

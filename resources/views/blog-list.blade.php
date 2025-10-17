@@ -5,11 +5,14 @@
     </x-slot>
     <x-slot name='main'>
 
-        @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
 
-        
+
 
         <div>
             <a href="{{ route('blog') }}" class="btn btn-outline-info my-2"><i class="fa-solid fa-plus"></i></a>
@@ -33,9 +36,14 @@
 
                     </td>
                     <td>
-                        <a href="{{ url('admin/delete/' . $blog->id) }}" class="btn btn-outline-danger"><i
-                                class="fa-solid fa-trash"></i></a>
-                        <a href="{{ url('admin/edit/'.$blog->id) }}" class="btn btn-outline-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="{{ url('admin/delete/' . $blog->id) }}" class="btn btn-outline-danger"
+                            onclick="return confirmDelete(event, this)">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+
+
+                        <a href="{{ url('admin/edit/' . $blog->id) }}" class="btn btn-outline-warning"
+                            onclick="delete()"><i class="fa-solid fa-pen-to-square"></i></a>
 
 
 
@@ -44,5 +52,17 @@
                 </tr>
             @endforeach
         </table>
+
+        <script>
+            function confirmDelete(event, element) {
+                event.preventDefault(); // Prevent immediate navigation
+
+                if (confirm("Are you sure you want to delete this blog?")) {
+                    // If confirmed, proceed with redirect
+                    window.location.href = element.href;
+                }
+            }
+        </script>
+
     </x-slot>
 </x-layout>

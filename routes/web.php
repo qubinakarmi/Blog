@@ -3,11 +3,13 @@
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-});
 
+// Route::get('/', function () {
+//     return view('home');
+// });
+Route::get('/fullpost/{id}',[UserController::class,'showFullpost'])->name('fullpost');
 Route::middleware('auth')->group(function () {
+    Route::view('/','home');
 
     Route::view('welcome', 'welcome');
     Route::view('dashboard', 'dashboard');
@@ -55,3 +57,8 @@ Route::post('admin/login-user', [UserController::class, 'adminLogin'])->name('ad
 
 Route::post('logout', [UserController::class, 'logout'])->name('logout');
 
+Route::get('forgot-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('forgot-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+Route::get('reset-password/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');

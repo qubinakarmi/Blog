@@ -1,5 +1,5 @@
 <x-layout>
-    <x-slot name="title">blog page</x-slot>
+    <x-slot name="title">Blog page</x-slot>
 
     <x-slot name="main">
         <div class="container my-2">
@@ -16,7 +16,7 @@
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Title</label>
                     <input type="text" class="form-control" id="exampleFormControlInput1"
-                        placeholder="input blog title" name="title">
+                        placeholder="Input blog title" name="title">
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">Description</label>

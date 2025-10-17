@@ -2,7 +2,7 @@
     <x-slot name="title">Login</x-slot>
     <x-slot name="main">
 
-{{-- 
+        {{-- 
         <div>
             @if (session('error'))
                 {{ session('error') }}
@@ -28,6 +28,10 @@
                         <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
+                <div class="link-group">
+                    <a href="{{ route('password.request') }}">Forgot your password?</a>
+                </div>
+
                 <div class="link-group">
                     <a href="register">Don't have an account? Register here</a>
                 </div>
