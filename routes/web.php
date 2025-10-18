@@ -3,6 +3,7 @@
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+    Route::view('home', 'home')->name('home');
 
 // Route::get('/', function () {
 //     return view('home');
@@ -12,8 +13,8 @@ Route::middleware('auth')->group(function () {
     Route::view('/','home');
 
     Route::view('welcome', 'welcome');
+    Route::view('about', 'about')->name('about');
     Route::view('dashboard', 'dashboard');
-    Route::view('home', 'home')->name('home');
     Route::get('blogpage',[UserController::class,'showBlogs'])->name('blog.show');
 });
 
@@ -32,7 +33,6 @@ Route::controller(UserController::class)->group(function () {
 
 
 Route::view('register', 'register');
-
 
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->controller(UserController::class)->group(function () {

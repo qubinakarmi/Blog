@@ -12,10 +12,12 @@ class UserController extends Controller
 {
 
 
+
+
     function showFullpost($id)
     {
-        $blogs=Blog::findorFail($id);
-        return view('fullpost',compact('blogs'));
+        $blogs = Blog::findorFail($id);
+        return view('fullpost', compact('blogs'));
     }
 
     function dashboard()
@@ -32,8 +34,8 @@ class UserController extends Controller
     {
 
         $request->validate([
-            'username' => 'required|min:8',
-            'email' => 'required|email',
+            'username' => 'required|min:8|unique:users,name',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed',
         ]);
 
@@ -174,7 +176,7 @@ class UserController extends Controller
         $deleted_blog = Blog::destroy($id);
 
         if ($deleted_blog) {
-            return redirect()->intended(route('list.blog'))->with('error','Blog has been deleted');
+            return redirect()->intended(route('list.blog'))->with('error', 'Blog has been deleted');
         } else {
             die('error');
         }
@@ -182,35 +184,29 @@ class UserController extends Controller
 
     function blogedit($id)
     {
-        $editblog=Blog::find($id);
+        $editblog = Blog::find($id);
 
 
-        return view('edit-blog',compact('editblog'));
+        return view('edit-blog', compact('editblog'));
     }
 
-function editlist(Request $request,$id)
+    function editlist(Request $request, $id)
 
-{
-    $editblog=Blog::find($id);
-    $editblog->title=$request->title;
-    $editblog->description=$request->description;
-    if ($request->hasFile('file')) {
+    {
+        $editblog = Blog::find($id);
+        $editblog->title = $request->title;
+        $editblog->description = $request->description;
+        if ($request->hasFile('file')) {
             $imageName = time() . '.' . $request->file('file')->extension();
             $request->file('file')->move(public_path('blog_images'), $imageName);
             $editblog->file = $imageName;
         }
-   
 
-    if($editblog->save())
-    {
-        return redirect()->intended(route('list.blog'))->with('success','edited successfully');
+
+        if ($editblog->save()) {
+            return redirect()->intended(route('list.blog'))->with('success', 'edited successfully');
+        } else {
+            die('error');
+        }
     }
-    else{
-        die('error');
-    }
-    
-    
-}
-
-
 }

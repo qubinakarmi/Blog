@@ -42,7 +42,7 @@
                         </a>
 
 
-                        <a href="{{ url('admin/edit/' . $blog->id) }}" class="btn btn-outline-warning"
+                        <a href="{{ url('admin/edit/' . $blog->id) }}" class="btn btn-outline-warning my-2"
                             onclick="delete()"><i class="fa-solid fa-pen-to-square"></i></a>
 
 

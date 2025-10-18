@@ -10,14 +10,14 @@
                 @csrf
 
 
-                <input type="text" name="username" id="" placeholder="Enter your name">
-
+                <input type="text" name="username" id="" placeholder="Enter your name"><br>
+                    
                 @error('username')
                     <span class="alert alert-danger" role="alert"> {{ $message }} </span>
                 @enderror <br><br>
 
 
-                <input type="text" name="email" placeholder="Enter your email">
+                <input type="text" name="email" placeholder="Enter your email"><br>
                 @error('email')
                     <span class="alert alert-danger" role="alert"> {{ $message }} </span>
                 @enderror
@@ -25,7 +25,7 @@
                 <br>
 
 
-                <input type="password" name="password" placeholder="Enter your password">
+                <input type="password" name="password" placeholder="Enter your password"><br>
                 @error('password')
                     <span class="alert alert-danger" role="alert"> {{ $message }}</span>
                 @enderror
@@ -100,7 +100,7 @@
             .error {
                 color: #e74c3c;
                 font-size: 14px;
-                margin-top: 5px;
+                margin-top: 25px;
                 display: block;
             }
 
